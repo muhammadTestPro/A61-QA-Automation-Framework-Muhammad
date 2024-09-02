@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="TestNG">
+<suite name="Smoke">
     <parameter name="baseUrl" value="https://qa.koel.app/"></parameter>
-    <test name="Login Tests Cucumber" preserve-order="false">
+    <test name="Crud Playlist Tests" preserve-order="false">
         <classes>
-            <!-- <class name="LoginTests"/>
-             <class name="BaseTest"/> -->
-            <class name="CucumberRunner"/>
+            <!-- <class name="LoginTests"/> -->
+             <class name="BaseTest"/>
+            <class name="Homework26"/>
         </classes>
     </test>
 </suite>

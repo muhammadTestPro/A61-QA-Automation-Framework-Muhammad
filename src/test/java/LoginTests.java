@@ -1,24 +1,38 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
+import pageFactory.HomePageFactory;
+import pageFactory.LoginPageFactory;
 
 public class LoginTests extends BaseTest {
+
     @Test
-    public void loginEmptyEmailPassword() throws InterruptedException {
+    public void loginValidEmailPassword()  {
+        LoginPageFactory loginPageFactory = new LoginPageFactory(getDriver());
+        HomePageFactory homePageFactory = new HomePageFactory(getDriver());
 
-//      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        // Fluent Way of Doing
+        loginPageFactory.inputEmail("marcello.ferraz.vieira@testpro.io")
+                .inputPassword("TestPro@1234")
+                .clickSubmit();
 
-        String url = "https://app.testpro.io/";
-        driver.get(url);
-        Assert.assertEquals(driver.getCurrentUrl(), url);
-        driver.quit();
+//        Normal Way
+//        loginPageFactory.inputEmail("marcello.ferraz.vieira@testpro.io");
+//        loginPageFactory.inputPassword("TestPro@123");
+//        loginPageFactory.clickSubmit();
+
+        Assert.assertTrue(homePageFactory.getUserAvatar().isDisplayed());
     }
+
+    @Test (enabled = true, priority = 3, description = "Login with invalid email and/or password", dataProvider = "LoginNegativeTestData")
+    public void loginInvalidEmailPassword(String Email, String Password){
+        LoginPageFactory loginPageFactory = new LoginPageFactory(getDriver());
+
+        loginPageFactory.inputEmail(Email);
+        loginPageFactory.inputPassword(Password);
+        loginPageFactory.clickSubmit();
+
+        String url = "https://qa.koel.app/";
+        Assert.assertEquals(getDriver().getCurrentUrl(),url);
+    }
+
 }
