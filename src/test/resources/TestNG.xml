@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="TestNG">
-
+<suite name="TestNG" parallel="methods" thread-count="1"> <!-- More than one parallel breaks "deleteFirstPlaylist -->
+    <parameter name="BaseURL" value="https://qa.koel.app/"/>
     <test name="Example Test" preserve-order="false">
         <classes>
             <class name="LoginTests"/>
-            <class name="BaseTest"/>
+            <class name="AnyPageTests"/>
+            <class name="CucumberRunner"/>
+         </classes>
+    </test>
+    <test name="Smoke Test" preserve-order="false">
+        <classes>
+        <class name="SmokeTest"/>
+        </classes>
+    </test>
+    <test name="Regression Test" preserve-order="false">
+        <classes>
+            <class name="RegressionTest"/>
+            <class name="CucumberRunner"/>
         </classes>
     </test>
 </suite>
